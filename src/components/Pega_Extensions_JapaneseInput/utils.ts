@@ -38,3 +38,60 @@ export const fullWidthToHalfWidth = (str: string): string => {
     .replace(/゛/g, 'ﾞ')
     .replace(/゜/g, 'ﾟ');
 };
+
+export const convertJapaneseEraToGregorian = (input: string): string | null => {
+  const japanRegex = /^(令和|平成|昭和|大正|明治)(\d+)(年)?$/;
+  const match = input.match(japanRegex);
+  if (!match) return null;
+  const era = match[1];
+  const eraYear = parseInt(match[2], 10);
+  let gregYear: number;
+  switch (era) {
+    case '令和':
+      gregYear = 2018 + eraYear;
+      break;
+    case '平成':
+      gregYear = 1988 + eraYear;
+      break;
+    case '昭和':
+      gregYear = 1925 + eraYear;
+      break;
+    case '大正':
+      gregYear = 1911 + eraYear;
+      break;
+    case '明治':
+      gregYear = 1867 + eraYear;
+      break;
+    default:
+      return null;
+  }
+  return `${gregYear.toString()}年`;
+};
+
+export const convertGregorianToJapaneseEra = (input: string): string | null => {
+  const gregRegex = /^(\d{3,4})(年)?$/;
+  const match = input.match(gregRegex);
+  if (!match) return null;
+  const year = parseInt(match[1], 10);
+  let era: string;
+  let eraYear: number;
+  if (year >= 2019) {
+    era = '令和';
+    eraYear = year - 2018;
+  } else if (year >= 1989) {
+    era = '平成';
+    eraYear = year - 1988;
+  } else if (year >= 1926) {
+    era = '昭和';
+    eraYear = year - 1925;
+  } else if (year >= 1912) {
+    era = '大正';
+    eraYear = year - 1911;
+  } else if (year >= 1868) {
+    era = '明治';
+    eraYear = year - 1867;
+  } else {
+    return null;
+  }
+  return `${era + eraYear.toString()}年`;
+};

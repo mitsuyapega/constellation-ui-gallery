@@ -79,6 +79,16 @@
           "name": "lowerToUpper",
           "label": "Lowercase to Uppercase",
           "format": "BOOLEAN"
+        },
+        {
+          "name": "japaneseEraToGregorian",
+          "label": "Hiragana to Katakana",
+          "format": "BOOLEAN"
+        },
+        {
+          "name": "gregorianToJapaneseEra",
+          "label": "Lowercase to Uppercase",
+          "format": "BOOLEAN"
         }
       ]
     },

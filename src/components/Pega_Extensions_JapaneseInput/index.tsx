@@ -14,7 +14,12 @@ import {
 } from '@pega/cosmos-react-core';
 import '../create-nonce';
 import type { FieldValueVariant } from '@pega/cosmos-react-core/lib/components/FieldValueList/FieldValueList';
-import { convertHiraganaToKatakana, fullWidthToHalfWidth } from './utils';
+import {
+  convertHiraganaToKatakana,
+  fullWidthToHalfWidth,
+  convertGregorianToJapaneseEra,
+  convertJapaneseEraToGregorian
+} from './utils';
 
 enum DisplayMode {
   DisplayOnly = 'DISPLAY_ONLY',
@@ -30,6 +35,8 @@ export interface PegaExtensionsJapaneseInputProps extends InputProps, TestIdProp
   hiraganaToKatakana: boolean;
   fullToHalf: boolean;
   lowerToUpper: boolean;
+  japaneseEraToGregorian?: boolean;
+  gregorianToJapaneseEra?: boolean;
   label: string;
   getPConnect: any;
   errorMessage: string;
@@ -63,6 +70,8 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
   hiraganaToKatakana = false,
   fullToHalf = false,
   lowerToUpper = false,
+  japaneseEraToGregorian,
+  gregorianToJapaneseEra,
   ...restProps
 }: PegaExtensionsJapaneseInputProps) => {
   const pConn = getPConnect();
@@ -142,6 +151,17 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
     }
     if (lowerToUpper) {
       newValue = newValue.toUpperCase();
+    }
+    if (japaneseEraToGregorian && /^(令和|平成|昭和|大正|明治)/.test(newValue)) {
+      const converted = convertJapaneseEraToGregorian(newValue);
+      if (converted) {
+        newValue = converted;
+      }
+    } else if (gregorianToJapaneseEra && /^\d{3,4}(年)?$/.test(newValue)) {
+      const converted = convertGregorianToJapaneseEra(newValue);
+      if (converted) {
+        newValue = converted;
+      }
     }
     if (event.target.value !== newValue) {
       setInputValue(newValue);
