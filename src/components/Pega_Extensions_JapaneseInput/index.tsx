@@ -35,8 +35,8 @@ export interface PegaExtensionsJapaneseInputProps extends InputProps, TestIdProp
   hiraganaToKatakana: boolean;
   fullToHalf: boolean;
   lowerToUpper: boolean;
-  japaneseEraToGregorian?: boolean;
-  gregorianToJapaneseEra?: boolean;
+  japaneseEraToGregorian: boolean;
+  gregorianToJapaneseEra: boolean;
   label: string;
   getPConnect: any;
   errorMessage: string;
@@ -70,8 +70,8 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
   hiraganaToKatakana = false,
   fullToHalf = false,
   lowerToUpper = false,
-  japaneseEraToGregorian,
-  gregorianToJapaneseEra,
+  japaneseEraToGregorian = false,
+  gregorianToJapaneseEra = false,
   ...restProps
 }: PegaExtensionsJapaneseInputProps) => {
   const pConn = getPConnect();
@@ -153,15 +153,9 @@ export const PegaExtensionsJapaneseInput: FC<PegaExtensionsJapaneseInputProps> =
       newValue = newValue.toUpperCase();
     }
     if (japaneseEraToGregorian && /^(令和|平成|昭和|大正|明治)/.test(newValue)) {
-      const converted = convertJapaneseEraToGregorian(newValue);
-      if (converted) {
-        newValue = converted;
-      }
-    } else if (gregorianToJapaneseEra && /^\d{3,4}(年)?$/.test(newValue)) {
-      const converted = convertGregorianToJapaneseEra(newValue);
-      if (converted) {
-        newValue = converted;
-      }
+      newValue = convertJapaneseEraToGregorian(newValue);
+    } else if (gregorianToJapaneseEra && /^([\d０-９]{3,4})(年)?/.test(newValue)) {
+      newValue = convertGregorianToJapaneseEra(newValue);
     }
     if (event.target.value !== newValue) {
       setInputValue(newValue);
