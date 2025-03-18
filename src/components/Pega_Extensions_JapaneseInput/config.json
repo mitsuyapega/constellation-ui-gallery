@@ -82,12 +82,12 @@
         },
         {
           "name": "japaneseEraToGregorian",
-          "label": "Hiragana to Katakana",
+          "label": "Japanese Era to Gregorian",
           "format": "BOOLEAN"
         },
         {
           "name": "gregorianToJapaneseEra",
-          "label": "Lowercase to Uppercase",
+          "label": "Gregorian to Japanese Era",
           "format": "BOOLEAN"
         }
       ]
