@@ -1,0 +1,121 @@
+{
+  "name": "Pega_Extensions_RepeatingView",
+  "label": "Repeating View",
+  "description": "Repeating View",
+  "organization": "Pega",
+  "version": "1.0.0",
+  "library": "Extensions",
+  "allowedApplications": [],
+  "componentKey": "Pega_Extensions_RepeatingView",
+  "type": "Template",
+  "subtype": "FORM",
+  "properties": [
+    {
+      "name": "label",
+      "label": "Label value",
+      "format": "TEXT"
+    },
+    {
+      "name": "sourceConfig",
+      "label": "Data source",
+      "format": "CASCADE",
+      "source": {
+        "format": "SELECT",
+        "name": "source",
+        "label": "Data Source",
+        "defaultValue": "property",
+        "source": [
+          {
+            "key": "property",
+            "value": "Property"
+          },
+          {
+            "key": "datapage",
+            "value": "Data Page"
+          }
+        ]
+      },
+      "cascadeElements": [
+        {
+          "key": "property",
+          "match": "property",
+          "name": "propertySettings",
+          "format": "GROUP",
+          "label": "Property Settings",
+          "properties": [
+            {
+              "name": "parentProperty",
+              "label": "Parent Property",
+              "format": "TEXT",
+              "required": true,
+              "helperText": "Name of the property to use as parent reference"
+            },
+            {
+              "name": "childProperty",
+              "label": "Child Property",
+              "format": "TEXT",
+              "helperText": "Name of the property to use as child reference"
+            }
+          ]
+        },
+        {
+          "key": "datapage",
+          "match": "datapage",
+          "name": "datapageSettings",
+          "format": "GROUP",
+          "label": "Data Page Settings",
+          "properties": [
+            {
+              "name": "parentDataPage",
+              "label": "Parent Data Page",
+              "format": "DATAPAGE",
+              "required": true
+            },
+            {
+              "name": "childDataPage",
+              "label": "Child Data Page",
+              "format": "DATAPAGE"
+            },
+            {
+              "name": "parentKey",
+              "label": "Parent Key",
+              "format": "TEXT",
+              "helperText": "Field name to use as parent identifier (default: 'id')",
+              "defaultValue": "id"
+            },
+            {
+              "name": "childKey",
+              "label": "Child Key",
+              "format": "TEXT",
+              "helperText": "Field name in child records that references the parent (default: 'parentId')",
+              "defaultValue": "parentId"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "parentColumns",
+      "label": "Parent Columns",
+      "format": "TEXT",
+      "helperText": "Comma-separated list of parent field names to display in the header of each parent record"
+    },
+    {
+      "name": "childColumns",
+      "label": "Child Columns",
+      "format": "TEXT",
+      "helperText": "Comma-separated list of child field names to display in the table"
+    },
+    {
+      "name": "visibility",
+      "label": "Visible",
+      "format": "VISIBILITY"
+    },
+    {
+      "name": "targetViews",
+      "label": "Target views",
+      "format": "VIEWPICKER"
+    }
+  ],
+  "defaultConfig": {}
+}
