@@ -2,7 +2,7 @@ import type { StoryObj } from '@storybook/react';
 import { PegaExtensionsDeletebleAttachments, type UtilityListProps } from './index';
 
 export default {
-  title: 'Widgets/Display Attachments',
+  title: 'Widgets/Deleteble Attachments',
   argTypes: {
     dataPage: {
       table: {
@@ -304,7 +304,7 @@ const DeletebleAttachmentsDemo = (inputs: UtilityListProps) => {
 };
 
 export const Default: Story = DeletebleAttachmentsDemo({
-  heading: 'Display attachments',
+  heading: 'Deleteble Attachments',
   categories: '',
   useLightBox: false,
   useAttachmentEndpoint: true,
@@ -315,7 +315,7 @@ export const Default: Story = DeletebleAttachmentsDemo({
 });
 
 export const Tiles: Story = DeletebleAttachmentsDemo({
-  heading: 'Display attachments',
+  heading: 'Deleteble Attachments',
   categories: '',
   useLightBox: true,
   useAttachmentEndpoint: true,

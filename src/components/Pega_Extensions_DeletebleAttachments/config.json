@@ -1,6 +1,6 @@
 {
   "name": "Pega_Extensions_DeletebleAttachments",
-  "label": "Display Attachments",
+  "label": "Deleteble Attachments",
   "description": "Display the attachments for a specific category",
   "organization": "Pega",
   "version": "1.0.0",

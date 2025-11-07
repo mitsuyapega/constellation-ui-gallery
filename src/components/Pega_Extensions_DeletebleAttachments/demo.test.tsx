@@ -6,7 +6,7 @@ const { Default, Tiles } = composeStories(DemoStories);
 
 test('renders DeletebleAttachments component with default args', async () => {
   render(<Default />);
-  expect(await screen.findByText('Display attachments')).toBeVisible();
+  expect(await screen.findByText('Deleteble Attachments')).toBeVisible();
   expect(await screen.findByText('6')).toBeVisible();
   expect(await screen.findByText('pega.com')).toBeVisible();
   const BtnEl = await screen.findByText('View all');
@@ -20,7 +20,7 @@ test('renders DeletebleAttachments component with default args', async () => {
 
 test('renders DeletebleAttachments component with tiles args', async () => {
   render(<Tiles />);
-  expect(await screen.findByText('Display attachments')).toBeVisible();
+  expect(await screen.findByText('Deleteble Attachments')).toBeVisible();
   expect(await screen.findByText('pega.com')).toBeVisible();
   expect(await screen.findByText('DemoFile')).toBeVisible();
   expect(await screen.findByText('SampleWord')).toBeVisible();

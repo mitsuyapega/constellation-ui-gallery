@@ -215,7 +215,7 @@ export const PegaExtensionsDeletebleAttachments = (props: UtilityListProps) => {
             </Button>
           ),
           secondary: <MetaList items={secondaryItems} />,
-          actions: attachment.canDelete
+          actions: attachment.CanDelete
             ? [
                 {
                   id: 'delete',
