@@ -1,16 +1,7 @@
-import {
-  Button,
-  FormControl,
-  FormField,
-  Modal,
-  Progress,
-  useModalManager,
-  withConfiguration,
-  type ModalMethods,
-} from '@pega/cosmos-react-core';
+import { FormControl, FormField, Progress, withConfiguration } from '@pega/cosmos-react-core';
 
 import '../shared/create-nonce';
-import { useRef, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import StyledList from './styles';
 
 export enum DisplayMode {
@@ -60,29 +51,6 @@ const base64ToArrayBuffer = (base64: string) => {
   return bytes.buffer;
 };
 
-const ViewPDFModal = ({
-  heading,
-  height,
-  width,
-  value,
-  showToolbar,
-}: {
-  heading: string;
-  width: string;
-  height: number;
-  value: string;
-  showToolbar: boolean;
-}) => {
-  const buf = base64ToArrayBuffer(value);
-  const blob = new Blob([buf], { type: 'application/pdf' });
-  const url = URL.createObjectURL(blob);
-  return (
-    <Modal heading={heading}>
-      <iframe src={`${url}${showToolbar ? '' : '#toolbar=0'}`} width={width} height={`${height}px`} title={heading} />
-    </Modal>
-  );
-};
-
 export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
   const {
     label = '',
@@ -92,14 +60,10 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
     value,
     hideLabel = false,
     dataPage = '',
-    displayMode = DisplayMode.Editable,
     getPConnect,
   } = props;
   const [loading, setLoading] = useState<boolean>(true);
   const [pdfFiles, setPdfFiles] = useState<any[]>([]);
-  const { create } = useModalManager();
-
-  const viewAllModalRef = useRef<ModalMethods<any>>();
 
   useEffect(() => {
     if (dataPage && getPConnect) {
@@ -124,26 +88,6 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
   }, [dataPage, getPConnect]);
 
   if (!dataPage) {
-    const displayComp = (
-      <Button
-        variant='link'
-        onClick={() => {
-          viewAllModalRef.current = create(ViewPDFModal, {
-            heading: label,
-            height,
-            width,
-            value,
-            showToolbar,
-          });
-        }}
-      >
-        {label}
-      </Button>
-    );
-
-    if (displayMode === DisplayMode.DisplayOnly) {
-      return displayComp;
-    }
     const buf = base64ToArrayBuffer(value);
     const blob = new Blob([buf], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
@@ -178,22 +122,22 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
   return (
     <StyledList>
       {pdfFiles.map((file) => {
+        const buf = base64ToArrayBuffer(file.data);
+        const blob = new Blob([buf], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
         return (
           <li key={file.pyLabel}>
-            <Button
-              variant='link'
-              onClick={() => {
-                viewAllModalRef.current = create(ViewPDFModal, {
-                  heading: file.pyLabel,
-                  width,
-                  height,
-                  value: file.pyContext,
-                  showToolbar,
-                });
-              }}
-            >
-              {file.pyLabel}
-            </Button>
+            <FormField label={label} labelHidden={hideLabel}>
+              <FormControl ariaLabel={label}>
+                <iframe
+                  name={label}
+                  src={`${url}${showToolbar ? '' : '#toolbar=0'}`}
+                  width={width}
+                  height={`${height}px`}
+                  title={label}
+                />
+              </FormControl>
+            </FormField>
           </li>
         );
       })}
