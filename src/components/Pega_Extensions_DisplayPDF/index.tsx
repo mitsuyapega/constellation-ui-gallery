@@ -122,19 +122,19 @@ export const PegaExtensionsDisplayPDF = (props: DisplayPDFProps) => {
   return (
     <StyledList>
       {pdfFiles.map((file, index) => {
-        const buf = base64ToArrayBuffer(file.Data);
+        const buf = base64ToArrayBuffer(file.pyContext);
         const blob = new Blob([buf], { type: 'application/pdf' });
         const url = URL.createObjectURL(blob);
         return (
           <li key={file.pyLabel || file.CaseInstanceKey || index}>
-            <FormField label={label} labelHidden={hideLabel}>
-              <FormControl ariaLabel={label}>
+            <FormField label={file.pyLabel} labelHidden={hideLabel}>
+              <FormControl ariaLabel={file.pyLabel}>
                 <iframe
-                  name={label}
+                  name={file.pyLabel}
                   src={`${url}${showToolbar ? '' : '#toolbar=0'}`}
                   width={width}
                   height={`${height}px`}
-                  title={label}
+                  title={file.pyLabel}
                 />
               </FormControl>
             </FormField>
